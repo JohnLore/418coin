@@ -4,6 +4,7 @@
 As the basis for a new crytocurrency, we are creating a proof of work algorthm with specifically poor parallelization on hardware such as GPUs and high transaction scalability. We aim to better democratize mining our coin by optimizing for modern day CPUs, such that anyone with a modern computer can profitably mine. Further, we plan to develop a new crytocurrency that employs this algorithm and scales transactions effectively.
 
 ###### [Project Website](https://johnlore.github.io/418coin/)
+###### [Initial Project Proposal]()
 
 
 ## Background

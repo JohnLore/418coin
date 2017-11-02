@@ -2,9 +2,9 @@
 # CPU Parallizable Proof of Work Based Cryptocurrency
 #### John Lore (jlore) and Richard Zhu (rzhu1) -- November 1st, 2017
 
-<URL here>
+###### URL here
 
-<summary here>
+###### summary here
 
 ### Background
 Cryptocurrency is a quickly expanding subsection of computer science, first emerging onto the scene with Bitcoin. The key idea behind blockchain technology is using computation power to find a random number, or "nonce", which once summed with a block, will hash to a number with _n_ trailing zeroes. The user who manages to first discover this nonce will be awarded the block, and a certain amount of bitcoin. However, there are many problems with the current implementation of bitcoin. This has spawned many alternative currencies, each of which attempts to shore up one or more of these aspects. Take for example, IOTA, a cryptocurrency which is aimed at microtransactions. The current implementation of bitcoin is not conducive to microtransactions, due to the fact that the entire system can only process 3-4 transactions per second. Thus, it cannot handle a high volume of transactions, and so IOTA uses a giant graph called "The Tangle", which makes it easy to perform microtransactions [https://iota.org/IOTA\_Whitepaper.pdf]. Ethereum, the second largest cryptocurrency by market capitalization, attempts to improve scalability, and has a limit of about 20 transactions per second. For comparison, Paypal current processes about an average of 200 transactions per second, with peaks on Cyber Monday of 500 transactions per second. VISA is able to handle almost 2000 transactions per second. Clearly, scalability issues need to be addressed if cryptocurrencies are ever meant to be used for meaningful real world transactions rather than just speculation and investment. Current work is in progress to increase this maximum limit to 1 million transactions per second.

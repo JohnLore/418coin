@@ -1,12 +1,12 @@
 
 # Anti-parallel Cryptocurrency
 #### John Lore (jlore) and Richard Zhu (rzhu1) - November 1st, 2017
-As the basis for a new crytocurrency, we are creating a proof of work algorthm with specifically poor parallelization on hardware such as GPUs. We aim to better democratize mining our currency by optimizing for mining on modern day CPUs, such that anyone with a modern CPU can profitably mine but no single entity should be able to amass a majority of the mining power.
+As the basis for a new crytocurrency, we are creating a proof of work algorthm with specifically poor parallelization on hardware such as GPUs and high transaction scalability. We aim to better democratize mining our coin by optimizing for modern day CPUs, such that anyone with a modern computer can profitably mine. Further, we plan to develop a new crytocurrency that employs this algorithm and scales transactions effectively.
 
 ###### [Project Website](https://johnlore.github.io/418coin/)
 
 
-### Background
+## Background
 Cryptocurrency is a quickly expanding subsection of computer science, first emerging onto the scene with [Bitcoin](https://bitcoin.org/bitcoin.pdf) in Satoshi Nakamoto's white paper. The key idea behind bitcoin is the proof of work algorithm, a.k.a. blockchain technology. This uses computation power to find a random number, or "nonce", which once summed with a block, will hash to a number with n trailing zeroes. The user who manages to first discover this nonce will be awarded the block, a certain amount of coin, and will continue the blockchain. The blockchain - history of hashes serves as a public proof of work for every transaction.
 
 #### Scalability Problem
@@ -18,7 +18,7 @@ Another problem with mined cryptocurrencies has to do with its integrity. One of
 #### Summary
 All these factors -- transaction latency, transaction fees, mining consolidation, and scalability -- limit the potential of crytocurrencies and their widespread adoption by businesses for everyday transactions. Targeting CPUs for parallelism of proof-of-work is interesting as GPUs are notoriously more efficent than CPUs for mining. Furthermore, the scalabilty of transactions lends itself well to being parallelized.
 
-### The Challenge
+## The Challenge
 The challenge therefore is to develop a cryptocurrency which has huge scalability potential, but is balanced such that it is extremely difficult for one body to be able to amass a majority of mining power. Our coin aims to be profitably mined by any person owning a modern CPU. We aim to learn deeply about crytocurrency and blockchain technology, and seek to understand what proof of work algorithms are very efficiently made parallel on modern CPUs while running inefficiently on GPUs. We also look to understand why transaction throughput for existing coins is so low and how to make transactions scalable to be competitive with more classic currencies.
 
 #### Democratized Mining
@@ -27,10 +27,10 @@ The difficulty does not lie in making our proof of work algorithm parallel, as t
 #### Transaction Scaling
 Due to the low number of transactions per second possible with bitcoin, the latency of verifying a transaction is very high. At the moment, it takes over an hour for a transaction to be verified. It is our goal to be able to create an algorithm for a cryptocurrency which not only has a high throughput, but also a low latency, and a latency which does not scale as the number of users and transactions increases.
 
-### Resources
+## Resources
 We will most likely be starting from an existing alternative coin implementation. We will be using the [bitcoin whitepaper](https://bitcoin.org/bitcoin.pdf) written by Satoshi Nakamoto as a reference for how bitcoin works and its capability. We will be using whitepapers for other cryptocurrencies as well, to determine strengths and weaknesses already present in existing coins. All the code for popular alternative currencies are open-sourced, and they all have whitepapers published. We will run our algorithm on our personal computers, and will verify that NVIDIA GPUs are unable to mine more effectively than CPUs for specific CUDA implementations.
 
-### Goals
+## Goals
 We plan to achieve a working cryptocurrency which is demonstrably parallel on moderns CPUs and is resistant to GPU parallelization. If we are unable to accomplish everything we wish, a reasonable fall-back goal is to design and implement simply the proof of work algorithm behind the cryptocurrency and demonstrate that this algorithm is difficult to parallelize among GPUs, but parallelizes well among CPUs. This would eliminate all the overhead and increased difficulty of actually implementing the cryptocurrency in totatality. 
 
 #### Stretch Goals
@@ -39,10 +39,10 @@ In regard to what we hope to achieve, we would like to actually refine this into
 #### Demo & Presentation
 For our presentation and demo, ideally, if we are able to accomplish our reach goal and deliver a true minable cryptocurrency, we would be able to complete transactions from one user to another, and so we would hopefully be able to demonstrate that, along with a demonstration of a miner validating the transaction. Minimally, we will show live demonstrations of mining on CPUs and GPUs alongside graphs depicting the speed comparisons.
 
-### Platform
+## Platform
 We plan on using C++ as our language of choice. This is because bitcoin and most subsequent cryptocurrencies are written in C++. The reasoning for this is that these cryptocurrencies must be extremely consistent across all platforms, or a fork will happen in the blockchain. Additionally, C++ has great performance, which is preferred in order to maximize the number of transactions per second. Our cryptocurrency will be platform agnostic. It should not matter which system one is using, given they have a modern CPU.
 
-### Schedule
+## Schedule
 
 Week of 10/30/2017: Finalize project idea and plan, begin research.
 

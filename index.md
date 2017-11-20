@@ -44,7 +44,7 @@ We plan to achieve an optimized, fast point cloud generator, update a global poi
 In regard to what we hope to achieve, we would like to create an app that anyone can download to experience a shared world. The would include some basic digital interaction between users.
 
 #### Demo & Presentation
-For our presentation and demo, if we are able to accomplish our plan we will demonstrate on two devices that one device caputing point cloud changes propogates on the other device seamlessly. A possible example of this would be placing a virtual object on a table, then turning away from it. A second user would move the table and the ball, and when the first turns back around they would have this updated information.
+At the poster session, we plan on having a demonstration. If we are able to accomplish our plans, we will demonstrate on two devices that one device capturing point cloud changes propogates on the other device seamlessly. A possible example of this would be placing a virtual object on a table, then turning away from it. A second user would move the table and the ball, and when the first turns back around they would have this updated information.
 
 ## Platform
 <Languages, API, etc -- TBD> "Describe why the platform (computer and/or language) you have chosen is a good one for your needs. Why does it make sense to use this parallel system for the workload you have chosen?"

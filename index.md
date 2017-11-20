@@ -59,7 +59,7 @@ Researched heavily, and found little luck in the fact that implementation requir
 
 #### Week of 11/13/2017: Create sequential version of algorithm and coin
 ##### Update: change project from Anti-parallel Cryptocurrency to Real Time Point Cloud Search, Upload, and Update
-We ended up pivoting this week to the project seen above. We got into ARkit and began developing with it... <to be updated soon to show what has been done>
+We ended up pivoting this week to the project seen above. We got into ARkit and began developing with it. A proof of concept demo has been created using ARKit to detect and define horizontal planes using iPhone. A sufficient ARKit package called ARPointCloud has been determined as the way to move forward. Work has been started on making the demo with ARPointCloud. However, documentation is scarce. 
 
 #### Week of 11/20/2017: Complete Fallback Goal -- Point Cloud on iPhone X, Parallelized
 
@@ -69,7 +69,15 @@ We ended up pivoting this week to the project seen above. We got into ARkit and 
 
 #### Week of 12/11/2017: Put finishing touches on the presentation & writeup and present our project
 
+As of right now, because we have recently pivoted from our original project of creating a complete cryptocurrency, we have been doing a lot of research and as such we don't have preliminary results. Regardless, we have a working ARKit demo, and we believe that we are on-track. A very good nice-to-have is the working demo, which we believe is well within the realm of possibility. However, we don't believe that we will be able to deliver a complete cryptocurrency package that is ready for use. 
+
 ## Progress
-We researched many cryptocurrencies and their associated proof of work algorithms. We targeted Monero's PoW algorithm specifically, as it is GPU and ASIC resistant by using a large 2MB buffer of memory that is randomly accessed as part of the algorithm. This makes a CPU mine efficiently as 2MB fits into the L3 cache on most CPUs, while GPUs and ASICs cannot support this and must fetch often from memory. 
+We researched many cryptocurrencies and their associated proof of work algorithms. We targeted Monero's PoW algorithm specifically, as it is GPU and ASIC resistant by using a large 2MB buffer of memory that is randomly accessed as part of the algorithm. This makes a CPU mine efficiently as 2MB fits into the L3 cache on most CPUs, while GPUs and ASICs cannot support this and must fetch often from memory. After determining a new direction for our project, much research was done into the uses and feasibility of a point-cloud based cryptocurrency. 
+
+Richard has created a proof of concept demo with ARKit which involves detecting and illustrating horizontal planes using an ARKit enabled iPhone. He has also done research into APIs which are suitable for point clouds in ARKit, which after research, the best option seems to be ARPointCloud. He attempted to create an analogous demo which used ARPointCloud to detect points of interest in the environment, but is as of yet unable to get it to work. Once this proof of concept and demo is working, then the next step is to have this be offloaded into the cloud, and have many devices be able to read and write to it at the same time. 
+
+## Concerning Issues
+
+We are concerned with being able to test the scalability of our project. In an ideal world, we would have able to have thousands of mobile phones updating and getting updates from our central point cloud database. However, we only have 2 iOS devices between the two partners in the project. Other than that, perhaps object permanence is an issue. All demos created so far and most used to demonstrate the capabilities of ARKit start every session from scratch, and do not retain information from previous sessions. We hope that with a central point cloud, we will be able to have object permanence, but we are not yet sure. 
 
 

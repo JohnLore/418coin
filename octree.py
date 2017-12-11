@@ -259,7 +259,7 @@ class Octree():
             for level in range(self.maxiter):
                 list_list.append([])
 
-            print list_list
+            #print list_list
             for level in range(self.maxiter):
                 for node in list_list[level]:
                     Xedge_max = center[0] + size

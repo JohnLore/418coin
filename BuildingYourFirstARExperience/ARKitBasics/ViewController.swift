@@ -8,6 +8,7 @@ Main view controller for the AR experience.
 import UIKit
 import SceneKit
 import ARKit
+import GameplayKit
 
 class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 	// MARK: - IBOutlets
@@ -38,9 +39,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
          Start the view's AR session with a configuration that uses the rear camera,
          device position and orientation tracking, and plane detection.
         */
+        
         let configuration = ARWorldTrackingConfiguration()
+        sceneView.debugOptions = ARSCNDebugOptions.showFeaturePoints
         configuration.planeDetection = .horizontal
         sceneView.session.run(configuration)
+        
 
         // Set a delegate to track the number of plane anchors for providing UI feedback.
         sceneView.session.delegate = self
@@ -71,7 +75,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
         // Create a SceneKit plane to visualize the plane anchor using its position and extent.
         let plane = SCNPlane(width: CGFloat(planeAnchor.extent.x), height: CGFloat(planeAnchor.extent.z))
-        let planeNode = SCNNode(geometry: plane)
+        let planeNode = SCNNode(geometry: SCNBox(width: 0.01, height: 0.01, length: 0.01, chamferRadius: 0))
         planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
         
         /*
@@ -81,7 +85,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         planeNode.eulerAngles.x = -.pi / 2
         
         // Make the plane visualization semitransparent to clearly show real-world placement.
-        planeNode.opacity = 0.25
+        planeNode.opacity = 0.0
         
         /*
          Add the plane visualization to the ARKit-managed node so that it tracks
@@ -98,6 +102,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
             let plane = planeNode.geometry as? SCNPlane
             else { return }
         
+        
         // Plane estimation may shift the center of a plane relative to its anchor's transform.
         planeNode.simdPosition = float3(planeAnchor.center.x, 0, planeAnchor.center.z)
         
@@ -112,6 +117,38 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     }
 
     // MARK: - ARSessionDelegate
+    
+    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+        var arr = Array(repeating: Array(repeating: Array(repeating: 0, count: 200), count: 200), count: 200);
+        if (frame.rawFeaturePoints != nil)
+        {
+        for index in 0..<frame.rawFeaturePoints!.points.count
+        {
+        let point = frame.rawFeaturePoints!.points[index];
+            //let anchor = ARAnchor(transform:float4x4.init(SCNMatrix4MakeTranslation(point.x, point.y, point.z)));
+            //session.add(anchor: anchor);
+            
+            //ARAnchor.init(transform: float4x4.init(SCNMatrix4MakeTranslation(point.x, point.y, point.z)));
+        //SCNNode(geometry: box)
+           // node.addChildNode(pointNode)
+            
+            var x = Int(point.x*10) + 100;
+            var y = Int(point.y*10) + 100;
+            var z = Int(point.z*10) + 100;
+            //print(Int(point.x*10).description + " " + Int(point.y*10).description + " " + Int(point.z*10).description);
+            arr[x][y][z]+=1;
+            print(arr[x][y][z]);
+            var tree = GKOctree(boundingBox: GKBox(boxMin: vector_float3(-100,-100,-100), boxMax: vector_float3(100,100,100)), minimumCellSize: 0.1);
+            tree.add(1 as NSObject, at: point);
+            
+        }
+            
+        let temp = frame.rawFeaturePoints?.points.count
+        //print("Frame Updated: point0 = \(temp?.x), \(temp?.y), \(temp?.z)")
+        print("Num feature points = \(temp)")
+    }
+    }
+    
 
     func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
         guard let frame = session.currentFrame else { return }

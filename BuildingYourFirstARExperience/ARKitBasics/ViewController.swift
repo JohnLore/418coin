@@ -118,6 +118,14 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     // MARK: - ARSessionDelegate
     
+    
+    
+    // This function is the one which parses the rawFeaturePoints, which is build into ARKit, and then
+    // iterates through all the points and adds them to an octree which is unique to this session.
+    // Each unit is roughyl equivalent to 1m. We chose 100m as a rather arbitrary number. This can be
+    // increased or decreased, as we don't think a user will be gather point cloud information
+    // from more than 100m in one direction.
+    
     func session(_ session: ARSession, didUpdate frame: ARFrame) {
         var arr = Array(repeating: Array(repeating: Array(repeating: 0, count: 200), count: 200), count: 200);
         if (frame.rawFeaturePoints != nil)
@@ -132,12 +140,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         //SCNNode(geometry: box)
            // node.addChildNode(pointNode)
             
-            var x = Int(point.x*10) + 100;
-            var y = Int(point.y*10) + 100;
-            var z = Int(point.z*10) + 100;
+            //var x = Int(point.x*10) + 100;
+            //var y = Int(point.y*10) + 100;
+            //var z = Int(point.z*10) + 100;
             //print(Int(point.x*10).description + " " + Int(point.y*10).description + " " + Int(point.z*10).description);
-            arr[x][y][z]+=1;
-            print(arr[x][y][z]);
+            //arr[x][y][z]+=1;
+            //print(arr[x][y][z]);
             var tree = GKOctree(boundingBox: GKBox(boxMin: vector_float3(-100,-100,-100), boxMax: vector_float3(100,100,100)), minimumCellSize: 0.1);
             tree.add(1 as NSObject, at: point);
             

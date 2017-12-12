@@ -115,6 +115,9 @@ def single(tree, template, n):
     z = -n
     x = -n + counter/2
     metric = [[[0 for a in range(n/2)] for b in range(n/2)] for c in range(n/2)]
+    aCount = 0
+    bCount = 0
+    cCount = 0
     a = 0
     b = 0
     c = 0
@@ -134,8 +137,14 @@ def single(tree, template, n):
                     minZ = z
                     minZoom = counter
                 z+= counter
+                cCount += 1
+                c = cCount % n/2
             y += counter
+            bCount +=1 
+            b = bCount % n/2
         x += counter
+        aCount += 1
+        a = aCount % n/2
     while(counter <= 16):
         metric = reduce(metric)
         n = len(metric)
@@ -143,7 +152,7 @@ def single(tree, template, n):
             for b in range(n):
                 for c in range(n):
                     if (metric[a][b][c] < minMetric):
-                        minMetric = tempMetric  
+                        minMetric = metric[a][b][c] 
                         minX = x
                         minY = y
                         minZ = z
@@ -158,41 +167,48 @@ def single(tree, template, n):
 def reduceMulti(matrix):
     """ This function takes an MxNxN matrix and returns an M/2xN/2xN/2 matrix in which every element is the sum of 8 of the elements from 
     the original matrix"""
+    #print "M1=",len(matrix)," M2=",len(matrix[0])," M3=",len(matrix[0][0])
     m = len(matrix)
     n = len(matrix[0][0])
     if (m > 1):
-        newMetric = [[[0 for a in range(m/2)] for b in range(n/2)] for c in range(n/2)]
+        #print ("M=%d, N=%d???", m, n)
+        newMetric = [[[0 for a in range(n/2)] for b in range(n/2)] for c in range(n/2)]
+        #print "m1=",len(newMetric)," m2=",len(newMetric[0])," m3=",len(newMetric[0][0])
         for x in range(m/2):
             for y in range(n/2):
                 for z in range(n/2):
+                    #print ("m=",m," n=",n," x=",x," y=",y," z=",z)
                     newMetric[x][y][z] = matrix[2*x][2*y][2*z] +matrix[2*x][2*y][2*z+1] +matrix[2*x][2*y+1][2*z] +matrix[2*x][2*y+1][2*z+1] +matrix[2*x+1][2*y][2*z] +matrix[2*x+1][2*y][2*z+1] +matrix[2*x+1][2*y+1][2*z] +matrix[2*x+1][2*y+1][2*z+1] 
     else: 
         newMetric = [[[0 for a in range(m)] for b in range(n/2)] for c in range(n/2)]
         for y in range(n/2):
                 for z in range(n/2):
-                    newMetric[x][y][z] = matrix[0][2*y][2*z] +matrix[0][2*y][2*z+1] +matrix[0][2*y+1][2*z] +matrix[0][2*y+1][2*z+1] +matrix[0][2*y][2*z] +matrix[0][2*y][2*z+1] +matrix[0][2*y+1][2*z] +matrix[0][2*y+1][2*z+1] 
+                    newMetric[0][y][z] = matrix[0][2*y][2*z] +matrix[0][2*y][2*z+1] +matrix[0][2*y+1][2*z] +matrix[0][2*y+1][2*z+1] +matrix[0][2*y][2*z] +matrix[0][2*y][2*z+1] +matrix[0][2*y+1][2*z] +matrix[0][2*y+1][2*z+1] 
     
     return newMetric
 
 
-def multi(tree, template, n, core):
-    """This version of the matching should be better than the naive, but not as good as the parallel"""
+def multi(core, tree, template, n, coreCount):
+    """ This is the parallel algorithm which splits the searchspace into n equal parts by x"""
     counter = 4
-    x = -32
-    y = -32
-    z = -32
-    x = -32 + counter/2 + core * 64/n
-    metric = [[[0 for a in range(16/n)] for b in range(16)] for c in range(16)]
+    x = -n
+    y = -n
+    z = -n
+    x = -n + counter/2 + core * n/coreCount
+    metric = [[[0 for a in range(n/2)] for b in range(n/2)] for c in range(n/2/coreCount)]
+    aCount = 0
+    bCount = 0
+    cCount = 0
     a = 0
     b = 0
     c = 0
     minMetric = sys.maxint
     threshold = sys.maxint
-    while (x <= 32 - counter/2 + (core + 1)*64/n):
-        y = -32 + counter/2
-        while(y <= 32 - counter/2):
-            z = -32 + counter/2
-            while(z <= 32 - counter/2):
+    while (x <= n - counter/2 + (core + 1)*n/coreCount):
+        y = -n + counter/2
+        while(y <= n - counter/2):
+            z = -n + counter/2
+            while(z <= n - counter/2):
                 entries = tree.find_within_range((x,y,z), counter, "cube")
                 metric[a][b][c] = calc_metric(entries, template)
                 if (metric[a][b][c] < minMetric):
@@ -202,15 +218,20 @@ def multi(tree, template, n, core):
                     minZ = z
                     minZoom = counter
                 z+= counter
+                cCount += 1
+                c = cCount % n/2
             y += counter
+            bCount += 1
+            b = bCount % n/2
         x += counter
+        a = aCount % n/2
     while(counter <= 16):
         metric = reduceMulti(metric)
         for a in range(len(metric)):
             for b in range(len(metric[0])):
                 for c in range(len(metric[0][0])):
                     if (metric[a][b][c] < minMetric):
-                        minMetric = tempMetric
+                        minMetric = metric[a][b][c]
                         minX = x
                         minY = y
                         minZ = z
@@ -220,6 +241,9 @@ def multi(tree, template, n, core):
         return (minX, minY, minZ, minZoom)
     else:
         return None
+
+
+
 
 
 if __name__ == "__main__":
@@ -234,6 +258,8 @@ if __name__ == "__main__":
     #y = np.array([5,7,10])
     #tree = ot.PyOctree(x, y)
 
+
+    """ The test data is procedurally generated. This step takes the longest. 64x64x64 will take about 40 seconds, and 128x128x128 will take about 40 minutes"""
 
     print "Creating octree"
     treeSize = 64
@@ -260,10 +286,10 @@ if __name__ == "__main__":
                 counter+= 1
 
 
-
+    sys.setrecursionlimit(10000)
     print("Intialization: --- %s seconds ---" % (time.time() - start_time))
 
-    func = partial(multi, [tree, template, n])
+    
 
     start_time = time.time()
     naive(tree, template, treeSize)
@@ -271,8 +297,18 @@ if __name__ == "__main__":
     start_time = time.time()
     single(tree, template, treeSize)
     print("Single: --- %s seconds ---" % (time.time() - start_time))
+    singleTime = time.time() - start_time
     start_time = time.time()
     #print(inputs)
+    
+
+
+
+
+    start_time = time.time()
+    func = partial(multi, tree = tree)
+    func = partial(func, template = template)
+    func = partial(func, n = treeSize)
     pool.map(func, range(n))
     print("Parallel: --- %s seconds ---" % (time.time() - start_time))
 
